@@ -137,25 +137,491 @@ class: center, middle, inverse
 
 ---
 
-&lt;script type=&#34;text/javascript&#34;
-  src=&#34;https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&#34;&gt;
-&lt;/script&gt;
-# bb2441-python
+# Python basics
 
-## 
 
-BB1000 Programming in Python
-KTH
+BB2441 
 
 ---
 
 layout: false
 
-## First slide
+# Basics of Python
 
-- write
-- me
 
+## Running
+
+### Interactive
+
+* Python without arguments starts up  the interpreter with a prompt that expects Python code lines 
+
+```
+    $ python
+    &gt;&gt;&gt; 
+    &gt;&gt;&gt; print(&#34;Hello world&#34;)
+    Hello world
+
+```
+
+---
+
+### Executing files
+
+
+```
+    $ python file.py
+```
+
+(Linux) Or if the first line is 
+
+```
+    #!/usr/bin/env python
+```
+
+and the file is executable
+
+```
+    $ chmod +x file.py
+    $ ./file.py 
+```
+
+---
+
+### Integrated development environments (IDE)
+
+* idle: a builtin Python editor/environment
+
+```
+$ python -m idlelib.idle
+```
+
+(tip: define a shell alias in startupfile)
+```
+alias idle=`python -m idlelib.idle`
+```
+
+Advanced IDEs
+
+* pycharm
+* spyder
+
+
+---
+
+### Notebooks
+
+```
+$ jupyter notebook
+```
+
+* work/develop in browser
+* mix documentation and code
+
+&lt;img src=&#39;jupyter.png&#39; height=&#34;300&#34; &gt;
+
+---
+
+### Syntax
+
+#### Blocking
+
+* First line of a block is marked by a colon
+* Rest of the block have common indentation
+
+```
+    &gt;&gt;&gt; for i in (1,2,3):
+    ...    print(i)
+    ... 
+    1
+    2
+
+```
+
+* Incorrect indentation leads to runtime error
+
+```
+    &gt;&gt;&gt; for i in (1, 2, 3): #doctest: +SKIP
+    ... print(i)
+      File &#34;&lt;stdin&gt;&#34;, line 2
+        print(i)
+            ^
+    IndentationError: expected an indented block
+
+```
+
+---
+
+### Objects
+
+*Everything is an object* ... almost
+
+Objects have
+
+* value
+* type
+* identity
+
+```
+    &gt;&gt;&gt; 3.14
+    &gt;&gt;&gt; type(3.14)
+    &lt;class &#39;float&#39;&gt;
+    &gt;&gt;&gt; id(3.14)
+    140215166415160
+
+```
+
+in addition
+
+* associated data and/or functions
+
+
+---
+
+### Variables
+
+* python assignment
+
+    Var = obj
+
+* Assignment is to bind a name to an object
+* free typing - one name can have different types
+* one object can have many names
+
+```python
+&gt;&gt;&gt; pi = 3.14
+&gt;&gt;&gt; print(pi)
+3.14
+&gt;&gt;&gt; π = pi
+&gt;&gt;&gt; print(π)
+3.14
+&gt;&gt;&gt; π is pi
+True
+```
+
+---
+
+### Some basic Python types
+
+* Bool
+* Number
+    * `int`
+    * `float`
+    * `complex`
+* String
+
+
+```
+&gt;&gt;&gt; type(True)
+&lt;class &#39;bool&#39;&gt;
+&gt;&gt;&gt; type(1)
+&lt;class &#39;int&#39;&gt;
+&gt;&gt;&gt; type(1.0)
+&lt;class &#39;float&#39;&gt;
+&gt;&gt;&gt; type(&#39;one&#39;)
+&lt;class &#39;str&#39;&gt;
+```
+
+
+---
+
+### Bool
+
+* True
+* False
+
+```
+    &gt;&gt;&gt; a = (1 &gt; 0)
+    &gt;&gt;&gt; print(a)
+    True
+
+```
+
+--
+
+### Numbers
+
+* int
+* float
+* complex
+
+```
+    i = 1
+    x = 3.14
+    z = 5 + 1j
+```
+
+---
+
+### Strings
+
+* *str* type
+* Single, double or triple quotes
+
+```
+    str1 = &#39;abc&#39;
+    str2 = &#34;abc&#34;
+    str3 = &#34;abc&#39;s&#34;
+    str4 = &#34;&#34;&#34;Time to learn
+    abc&#34;&#34;&#34;
+```
+
+---
+
+## Container objects
+
+* Lists
+* Sets
+* Dictionaries
+
+
+### Lists
+
+* A numbered sequence of objects
+* First element has index zero
+* Square brackets
+* [] is the empty list
+* [1, True, &#39;you&#39;]
+
+
+---
+
+### Tuples
+
+* An immutable (unchangeable) sequence of objects
+* Similar to lists
+* () is the empty tuple
+* (1,)  contains 1 element -note the comma
+
+---
+
+### Dictionaries
+
+* Sets of key-value pairs
+* The key can be any immutable object
+* Very useful for complex structures
+* Efficient and highly optimized
+
+```
+empty =  {} # empty dict
+newdict = {&#39;a&#39;:1, &#39;b&#39;:2}
+```
+
+---
+
+### Sets
+
+* Unordered collecetion of objects
+* Supports set operations
+
+```
+    a = set([1,2]); b = set([2,3])
+    a|b #union
+    a&amp;b #intersection
+```
+
+
+---
+
+### Repetition (looping)
+
+```
+&gt;&gt;&gt; for e in [1, 2, 3]: 
+...    print(e)
+1
+2
+3
+```
+
+
+
+```
+newdict = {&#39;a&#39;: 1, &#39;b&#39;: 2}
+for k in newdict:
+    print(k, newdict[k])
+a 1
+b 2
+```
+
+
+---
+
+### Functions
+
+* Definition
+
+```
+   &gt;&gt;&gt; def f(args):
+   ...    #*statements*
+   ...    return #[value]
+
+```
+
+* functions are also objects
+* have identity and type
+* can be passed as arguments to other functions
+    
+
+* Function are called
+
+```
+&gt;&gt;&gt; v = f(x)
+```
+
+* Arguments `x` are input
+* Return values output (saved in `v`)
+* Changing input arguments in functions is possible but not recommended
+
+---
+
+### Modules
+
+
+* a file with python source 
+   - name is the filename without the ``.py`` extension
+* `import` modules to reuse code
+* members of module referenced with dot notatoin `module.member`
+
+Commonly used Python modules
+
+* ``sys``
+* ``os``
+* ``math``
+
+---
+
+#### `sys`
+
+* system modules
+* needed e.g. for arguments to a script
+* `sys.argv` is a list of string arguments
+* `sys.argv\[0\]` is the file name
+
+```
+    import sys
+    infile = sys.argv[1]
+```
+
+#### `os`
+
+* Interaction with operating system
+* Example: execute a unix command 
+
+```
+    import os
+    os.system(&#39;/bin/date&#39;)
+```
+
+
+#### `math`
+
+* all basic elementry functions
+* fundamental constants
+
+```
+    import math
+    print(math.sin(math.pi/2))
+```
+
+#### Tip
+
+Many use the math modules as a desktop calculator
+
+    $ python
+    &gt;&gt;&gt; from math import *
+    &gt;&gt;&gt; print(pi/2)
+    1.5707963267948966
+    &gt;&gt;&gt;
+
+---
+
+#### Writing/using your own modules
+
+* Suppose you have written file ``a.py`` with function ``b``
+```
+    #a.py
+    def fun():
+        ...
+        return some_value
+```
+
+* To access the same function in other code, import module
+```
+    import a
+    val = a.fun()
+```
+
+* or to import an individual function of a module
+```
+    from a import fun
+    c = fun()
+```
+
+
+---
+
+### Files
+
+```
+    &gt;&gt;&gt; fo = open(&#39;foo&#39;, &#39;r&#39;)
+
+```
+
+* opens the file name for reading
+* if is does not exist - Error
+* returns a file object assigned to variable fo
+
+```
+    &gt;&gt;&gt; file_str = fo.read()
+
+```
+* loads the contensts of the file to a string *file_str*
+
+```
+    &gt;&gt;&gt; fo.close()
+
+```
+* close the file when done
+
+---
+
+### Reading text
+
+Other ways to read a file into memory
+
+* As a list of strings
+```
+    fo.readlines()
+```
+* One line at a time
+```
+    fo.readline() 
+```
+* In a for loop
+```
+    fo = open(&#39;file.txt&#39;) 
+    for line in fo:
+        *work on line*
+```
+
+The for statement is very powerful!
+First example of iterator
+
+---
+
+### Summary
+
+
+* Basic syntax - indentation
+* Basic built in variable types
+* Scalar and container types
+* Modules
+* Files
+
+
+### On-line reference
+
+Jake van der Plas: 
+&lt;a href=&#34;http://nbviewer.jupyter.org/github/jakevdp/WhirlwindTourOfPython/blob/master/Index.ipynb&#34;&gt; A Worldwind Tour of Python&lt;/a&gt;
     </textarea>
 
     <script src="/bb2441-python/refreeze/js/remark-latest.min.js" type="text/javascript"></script>
