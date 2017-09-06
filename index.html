@@ -151,59 +151,100 @@ layout: false
 
 ## Running
 
-### Interactive
+### Interactively
 
-* Python without arguments starts up  the interpreter with a prompt that expects Python code lines 
+* `python` without arguments starts up  the interpreter 
+* The prompt `&gt;&gt;&gt;` expects Python code lines 
 
 ```
     $ python
-    &gt;&gt;&gt; 
     &gt;&gt;&gt; print(&#34;Hello world&#34;)
     Hello world
 
 ```
 
+* A read-evaluate-print-loop (REPL)
+    - reading a Python expression
+    - reducing the expression to a value
+    - printing the value to the screen
+    - starting over
+
 ---
 
 ### Executing files
 
+Python scripts or programs are text files with Python statements which are executed
+in order
+
+```bash
+$ cat file.py
+#!/usr/bin/env python
+print(&#34;Hello world&#34;)
+```
+```
+$ python file.py
+Hello world
+```
+
+#### (Linux)
+
+As for bash, a Python script can be run by typing the name directly on the
+command line if the first line is
 
 ```
-    $ python file.py
+#!/usr/bin/env python
+```
+(instructs operating system how the script is to be interpreted)
+and if it is executable in the Unix sense
+
+```bash
+$ chmod +x file.py
+$ ./file.py 
+Hello world
 ```
 
-(Linux) Or if the first line is 
 
-```
-    #!/usr/bin/env python
-```
 
-and the file is executable
+---
 
-```
-    $ chmod +x file.py
-    $ ./file.py 
-```
+### Creating Python scripts
+
+#### Text editors
+
+To enter code into files you need to use a text editor (not a word processor
+like Microsoft Word). A text editor if good for programming if it automatically
+colors special keywords for the programming language of that file. A simple 
+editor that fulfills this is `nano`.
+
+Google search for 
+&lt;a href=&#34;https://www.google.se/search?q=best%20programming%20editor&#34;&gt;
+best programming editor
+&lt;/a&gt;: 
+normally lists editors like vim, emacs, atom, sublime.
+Spending time to learn one well is worth the investment.
+
 
 ---
 
 ### Integrated development environments (IDE)
 
-* idle: a builtin Python editor/environment
+IDE: Combined editor and execution environment
+
+* idle: a built-in Python IDE
 
 ```
 $ python -m idlelib.idle
 ```
 
-(tip: define a shell alias in startupfile)
-```
-alias idle=`python -m idlelib.idle`
-```
+&lt;img src=&#34;idle.png&#34; height=&#34;400&#34;&gt;
 
-Advanced IDEs
+---
+
+Other advanced IDEs
 
 * pycharm
 * spyder
+&lt;img src=&#34;spyder.png&#34; height=&#34;400&#34;&gt;
 
 
 ---
@@ -221,36 +262,6 @@ $ jupyter notebook
 
 ---
 
-### Syntax
-
-#### Blocking
-
-* First line of a block is marked by a colon
-* Rest of the block have common indentation
-
-```
-    &gt;&gt;&gt; for i in (1,2,3):
-    ...    print(i)
-    ... 
-    1
-    2
-
-```
-
-* Incorrect indentation leads to runtime error
-
-```
-    &gt;&gt;&gt; for i in (1, 2, 3): #doctest: +SKIP
-    ... print(i)
-      File &#34;&lt;stdin&gt;&#34;, line 2
-        print(i)
-            ^
-    IndentationError: expected an indented block
-
-```
-
----
-
 ### Objects
 
 *Everything is an object* ... almost
@@ -263,9 +274,10 @@ Objects have
 
 ```
     &gt;&gt;&gt; 3.14
+    3.14
     &gt;&gt;&gt; type(3.14)
     &lt;class &#39;float&#39;&gt;
-    &gt;&gt;&gt; id(3.14)
+    &gt;&gt;&gt; id(3.14)                                                                                 #doctest: +SKIP
     140215166415160
 
 ```
@@ -277,14 +289,193 @@ in addition
 
 ---
 
+### Some basic Python types
+
+* Logical: `bool`
+* Number: `int`, `float`, `complex`
+* String: `str`
+
+
+```python
+&gt;&gt;&gt; True
+True
+&gt;&gt;&gt; type(True)
+&lt;class &#39;bool&#39;&gt;
+
+```
+```python
+&gt;&gt;&gt; 1
+1
+&gt;&gt;&gt; type(1)
+&lt;class &#39;int&#39;&gt;
+
+```
+```python
+&gt;&gt;&gt; 1.0
+1.0
+&gt;&gt;&gt; type(1.0)
+&lt;class &#39;float&#39;&gt;
+
+```
+```python
+&gt;&gt;&gt; &#34;one&#34;
+&#39;one&#39;
+&gt;&gt;&gt; type(&#39;one&#39;)
+&lt;class &#39;str&#39;&gt;
+
+```
+
+
+---
+
+### Bool
+
+* True
+* False
+
+Comparison operators; `==, !=, &gt;, &lt;, &lt;=, &gt;=`
+
+```python
+&gt;&gt;&gt; 1 &gt; 0
+True
+
+```
+```python
+&gt;&gt;&gt; 1 == 0
+False
+
+```
+
+
+Combination operators `and`, `or`
+
+```python
+&gt;&gt;&gt; True and False
+False
+
+```
+
+```python
+&gt;&gt;&gt; True or False
+True
+
+```
+
+Others: `in`
+
+```python
+&gt;&gt;&gt; &#39;CAT&#39; in &#39;CTGATCATCTAC&#39;
+True
+
+```
+
+---
+
+### Numbers
+
+* integer - whole numbers: `int`
+
+```python
+&gt;&gt;&gt; 8 * 8
+64
+&gt;&gt;&gt; type(8 * 8)
+&lt;class &#39;int&#39;&gt;
+
+```
+
+* real -  decimal numbers: `float`
+
+```python
+&gt;&gt;&gt; type(2), type(3.14)
+(&lt;class &#39;int&#39;&gt;, &lt;class &#39;float&#39;&gt;)
+&gt;&gt;&gt; 2 * 3.14
+6.28
+&gt;&gt;&gt; type(2 * 3.14)
+&lt;class &#39;float&#39;&gt;
+&gt;&gt;&gt; 0.1 + 0.2 # round-off errors
+0.30000000000000004
+
+```
+
+* complex (real and imaginary parts) -  `complex`
+
+```python
+&gt;&gt;&gt; 1j * 1j
+(-1+0j)
+&gt;&gt;&gt; type(1j * 1j)
+&lt;class &#39;complex&#39;&gt;
+
+```
+
+
+
+---
+
+### Strings
+
+* *str* type
+* Single, double or triple quotes
+
+```
+&gt;&gt;&gt; &#39;abc&#39;
+&#39;abc&#39;
+
+```
+```
+&gt;&gt;&gt; &#34;abc&#34;
+&#39;abc&#39;
+
+```
+```
+&gt;&gt;&gt; &#34;abc&#39;s&#34;
+&#34;abc&#39;s&#34;
+
+```
+```
+&gt;&gt;&gt; &#34;&#34;&#34;Time to learn
+... abc&#34;&#34;&#34;
+&#39;Time to learn\nabc&#39;
+
+```
+
+* addition operator concatenates strings
+
+```
+&gt;&gt;&gt; &#39;abc&#39; + &#39;cde&#39;
+&#39;abccde&#39;
+
+```
+
+* string conversion function
+
+```python
+&gt;&gt;&gt; &#39;Hello&#39;.upper()
+&#39;HELLO&#39;
+&gt;&gt;&gt; &#39;Hello&#39;.lower()
+&#39;hello&#39;
+
+```
+
+* test only letters
+
+```python
+&gt;&gt;&gt; &#39;Hel-lo&#39;.isalpha()
+False
+
+```
+
+---
+
 ### Variables
 
-* python assignment
-
-    Var = obj
+* To save the value of an object it is assigned to a *variable*
+* The assignment operator is `=` (not to be confused with the equality
+operator `==`)
 
 * Assignment is to bind a name to an object
-* free typing - one name can have different types
+
+* Python has so called free typing - one name can have different types
+
 * one object can have many names
 
 ```python
@@ -296,74 +487,9 @@ in addition
 3.14
 &gt;&gt;&gt; π is pi
 True
-```
-
----
-
-### Some basic Python types
-
-* Bool
-* Number
-    * `int`
-    * `float`
-    * `complex`
-* String
-
-
-```
-&gt;&gt;&gt; type(True)
-&lt;class &#39;bool&#39;&gt;
-&gt;&gt;&gt; type(1)
-&lt;class &#39;int&#39;&gt;
-&gt;&gt;&gt; type(1.0)
-&lt;class &#39;float&#39;&gt;
-&gt;&gt;&gt; type(&#39;one&#39;)
-&lt;class &#39;str&#39;&gt;
-```
-
-
----
-
-### Bool
-
-* True
-* False
-
-```
-    &gt;&gt;&gt; a = (1 &gt; 0)
-    &gt;&gt;&gt; print(a)
-    True
 
 ```
 
---
-
-### Numbers
-
-* int
-* float
-* complex
-
-```
-    i = 1
-    x = 3.14
-    z = 5 + 1j
-```
-
----
-
-### Strings
-
-* *str* type
-* Single, double or triple quotes
-
-```
-    str1 = &#39;abc&#39;
-    str2 = &#34;abc&#34;
-    str3 = &#34;abc&#39;s&#34;
-    str4 = &#34;&#34;&#34;Time to learn
-    abc&#34;&#34;&#34;
-```
 
 ---
 
@@ -373,15 +499,121 @@ True
 * Sets
 * Dictionaries
 
+---
 
 ### Lists
 
-* A numbered sequence of objects
-* First element has index zero
-* Square brackets
-* [] is the empty list
-* [1, True, &#39;you&#39;]
+* A list is a ordered sequence of objects 
+* Notation: square brackets `[]` (empty), `[1, 2, 3]`
 
+```python
+&gt;&gt;&gt; []
+[]
+&gt;&gt;&gt; type([])
+&lt;class &#39;list&#39;&gt;
+
+```
+* List can have objects of different types
+* List members are referenced with `[n]` where `n=0, 1, 2...`
+
+```python
+&gt;&gt;&gt; stuff = [1, True, &#39;you&#39;]
+&gt;&gt;&gt; stuff[1]
+True
+
+```
+
+* Functions on lists:
+
+```python
+&gt;&gt;&gt; len(stuff)
+3
+
+```
+
+---
+
+* Functions can be attached with the list object (so-called class methods)
+
+```python
+&gt;&gt;&gt; stuff.index(True) #surprise
+0
+
+```
+
+```python
+&gt;&gt;&gt; stuff.append([])
+&gt;&gt;&gt; stuff
+[1, True, &#39;you&#39;, []]
+
+```
+
+
+* The `range` function returns a sequence of numbers starting with zero
+
+```python
+&gt;&gt;&gt; list(range(3))
+[0, 1, 2]
+
+```
+
+* The `join` function creates a single string from a list of strings
+
+```python
+&gt;&gt;&gt; &#39;a&#39; + &#39;|&#39; + &#39;b&#39; + &#39;|&#39; + &#39;c&#39;
+&#39;a|b|c&#39;
+&gt;&gt;&gt; &#39;|&#39;.join([&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+&#39;a|b|c&#39;
+
+```
+
+* The `split` function splits a string to a list of substrings
+
+```python
+&gt;&gt;&gt; &#39;Hello world&#39;.split()
+[&#39;Hello&#39;, &#39;world&#39;]
+
+```
+
+
+---
+
+* There is a `list` function that converts another sequence to a `list` object
+
+```python
+&gt;&gt;&gt; list()
+[]
+&gt;&gt;&gt; list(&#39;abc&#39;)
+[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+
+```
+
+* The `reverse` list function does not return any value, changes in place 
+
+```python
+&gt;&gt;&gt; l = [1, 2, 3]
+&gt;&gt;&gt; l.reverse()
+&gt;&gt;&gt; l
+[3, 2, 1]
+
+```
+* The general reversed function keeps original and returns opposite order
+
+```python
+&gt;&gt;&gt; list(reversed(l))
+[1, 2, 3]
+&gt;&gt;&gt; l
+[3, 2, 1]
+
+```
+
+* The `in` operator tests lists membership
+
+```python
+&gt;&gt;&gt; 2 in l
+True
+
+```
 
 ---
 
@@ -392,6 +624,24 @@ True
 * () is the empty tuple
 * (1,)  contains 1 element -note the comma
 
+Handy packing and unpacking
+
+```python
+&gt;&gt;&gt; t = 1, 2  #packing
+&gt;&gt;&gt; t
+(1, 2)
+&gt;&gt;&gt; x, y = t  #unpacking
+&gt;&gt;&gt; x
+1
+&gt;&gt;&gt; y
+2
+&gt;&gt;&gt; x, y = y, x  #swapping
+&gt;&gt;&gt; x
+2
+&gt;&gt;&gt; y
+1
+
+```
 ---
 
 ### Dictionaries
@@ -419,57 +669,124 @@ newdict = {&#39;a&#39;:1, &#39;b&#39;:2}
     a&amp;b #intersection
 ```
 
-
 ---
 
-### Repetition (looping)
+### Repetition (iteration, looping)
 
-```
+* The `for ... in` statement is used repeat the same operation for all elements of a
+sequence
+
+* A loop variable will reference the elements of the sequence, one at a time
+
+
+```python
 &gt;&gt;&gt; for e in [1, 2, 3]: 
 ...    print(e)
 1
 2
 3
+
+```
+
+```python
+&gt;&gt;&gt; for c in &#39;hello&#39;:
+...     print(c)
+h
+e
+l
+l
+o
+
 ```
 
 
 
-```
-newdict = {&#39;a&#39;: 1, &#39;b&#39;: 2}
-for k in newdict:
-    print(k, newdict[k])
+```python
+&gt;&gt;&gt; for k, v in {&#39;a&#39;: 1, &#39;b&#39;: 2}.items():                                       #doctest: +SKIP
+...    print(k, v)
 a 1
 b 2
+
 ```
 
 
 ---
 
+### Branching (if statements)
+
+Conditional execution of code blocks depending on whether an expression
+evaluates to True or not:
+
+```
+&gt;&gt;&gt; if True:
+...     print(&#34;Yes&#34;)
+... else:
+...     print(&#34;No&#34;)
+Yes
+
+```
+
+```
+&gt;&gt;&gt; i = j = 0
+&gt;&gt;&gt; if i &gt; j:
+...     print(i, &#34; is larger than &#34;, j)
+... else:
+...     print(i, &#34;is smaller than or equal to&#34;, j)
+0 is smaller than or equal to 0
+
+```
+
+Most object types have some truthiness. Empty lists in a logical context
+evaluate to False, non-empty to True
+
+```
+&gt;&gt;&gt; if []:
+...     print(&#34;Non-empty list&#34;)
+... else:
+...     print(&#34;Empty list&#34;)
+Empty list
+
+```
+
+as for dictionaries
+```
+&gt;&gt;&gt; if {&#39;count&#39;: 1}:
+...     print(&#34;Non-empty dict&#34;)
+... else:
+...     print(&#34;Empty dict&#34;)
+Non-empty dict
+
+```
+---
+
 ### Functions
 
-* Definition
+* Functions are objects that can take some input and return some output.
+Functions are the primary way of grouping code into independent units, that can be tested and reused
+
+* Function definitions start `def`, a name,  parentheses with or without
+arguments (comma-separated) and a colon.
+The body of the function is indented with respect to the `def` keyword.
+The last line of a function definition is normally a `return` statement and determines the value of a function call
 
 ```
-   &gt;&gt;&gt; def f(args):
-   ...    #*statements*
-   ...    return #[value]
+&gt;&gt;&gt; def square(x):
+...    x2 = x * x
+...    return x2
 
 ```
 
-* functions are also objects
-* have identity and type
-* can be passed as arguments to other functions
-    
-
-* Function are called
+* Functions are called with function name and an actual parameter. 
 
 ```
-&gt;&gt;&gt; v = f(x)
+&gt;&gt;&gt; square(2)
+4
+
 ```
 
-* Arguments `x` are input
-* Return values output (saved in `v`)
-* Changing input arguments in functions is possible but not recommended
+* Inside the function the formal parameter `x` becomes a reference to the actual
+parameter `2`.
+
 
 ---
 
@@ -618,10 +935,13 @@ First example of iterator
 * Files
 
 
-### On-line reference
+### On-line references
 
 Jake van der Plas: 
 &lt;a href=&#34;http://nbviewer.jupyter.org/github/jakevdp/WhirlwindTourOfPython/blob/master/Index.ipynb&#34;&gt; A Worldwind Tour of Python&lt;/a&gt;
+
+Al Sweigart:
+&lt;a href=&#34;https://automatetheboringstuff.com&#34;&gt;Automate the Boring Stuff with Python&lt;/a&gt;
     </textarea>
 
     <script src="/bb2441-python/refreeze/js/remark-latest.min.js" type="text/javascript"></script>
