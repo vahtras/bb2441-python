@@ -307,6 +307,8 @@ True
 
 ```
 
+---
+
 * string conversion function
 
 ```python
