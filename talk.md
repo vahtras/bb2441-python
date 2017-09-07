@@ -611,6 +611,8 @@ Empty list
 
 ```
 
+---
+
 as for dictionaries
 ```
 >>> if {'count': 1}:
